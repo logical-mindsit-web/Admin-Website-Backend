@@ -1,0 +1,15 @@
+kesava@spotless.ai
+sabari.navaneethan@spotless.ai
+pondinesh@spotless.ai
+
+
+
+  const teamEmails = [
+    "kesava@spotless.ai",
+    "msabari.navaneethan@spotless.ai",
+    "pondinesh@spotless.ai",
+  ];
+
+
+
+  https://i.postimg.cc/LXBcG7q8/Spotless-AI-Logo-Straight-O-black.png
