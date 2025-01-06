@@ -57,7 +57,7 @@ export const bookingEmail = async (recipient, sessionDates, name) => {
 
 // Function to notify team members
 export const notifyTeam = async (name, companyName, sessionDates) => {
-  const teamEmails = ["malaravanm2911@gmail.com","kesava@spotless.ai"];
+  const teamEmails = ["malaravanm2911@gmail.com"];
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_ADMIN,
