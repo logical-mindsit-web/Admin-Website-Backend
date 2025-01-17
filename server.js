@@ -15,7 +15,7 @@ import robotmsgRoutes from "./src/Routes/robotmsgRoutes .js"
 import Booking from "./src/Routes/BookingSessionRoute.js"
 import robotanalytics from "./src/Routes/Analytics.js"
 import robotController from './src/Routes/RobotController.js';
-import History from "./src/Routes/History.js"
+
 
 import appVersion from './src/Routes/versionRoutes.js';
 import Appdetails from './src/Routes/Appdetails.js';
@@ -50,7 +50,6 @@ app.use('/', appVersion);
 app.use('/', Appdetails);
 app.use('/', modelImage);
 app.use('/', robotController);
-app.use('/modes', History);
 
 // Start server
 app.listen(PORT, async () => {

@@ -1,54 +1,5 @@
+// Import the RobotAnalytics model
 import RobotAnalytics from "../Models/RobotAnalytics.js";
-
-// Controller function to save robot analytics data
-export const saveRobotAnalytics = async (req, res) => {
-  try {
-    const {
-      robotId,
-      emailId,
-      model,
-      batteryPercentage,
-      motordistanceCovered,
-      analytics: {
-        batteryRunningTime: { startingTime: batteryStartTime, endingTime: batteryEndTime },
-        motorRunningTime: { startingTime: motorStartTime, endingTime: motorEndTime },
-        uvLightRunningTime: { startingTime: uvLightStartTime, endingTime: uvLightEndTime },
-      },
-      detectionDetails,
-    } = req.body;
-
-    // Create a new instance of RobotAnalytics
-    const robotAnalytics = new RobotAnalytics({
-      robotId,
-      emailId,
-      model,
-      batteryPercentage,
-      motordistanceCovered,
-      analytics: {
-        batteryRunningTime: {
-          startingTime: batteryStartTime,
-          endingTime: batteryEndTime
-        },
-        motorRunningTime: {
-          startingTime: motorStartTime,
-          endingTime: motorEndTime
-        },
-        uvLightRunningTime: {
-          startingTime: uvLightStartTime,
-          endingTime: uvLightEndTime
-        },
-      },
-      detectionDetails,
-    });
-
-    // Save the robot analytics data to the database
-    await robotAnalytics.save();
-
-    return res.json({ message: "Robot analytics saved successfully." });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
 
 // Controller function to get robot analytics data by email
 export const getRobotAnalyticsByEmail = async (req, res) => {
@@ -65,24 +16,36 @@ export const getRobotAnalyticsByEmail = async (req, res) => {
       });
     }
 
-    // Reformat the data: move details first and analytics after
+    // Reformat the data: structure it based on the updated schema
     const formattedData = robotAnalyticsData.map((item) => ({
       _id: item._id,
       robotId: item.robotId,
       emailId: item.emailId,
       model: item.model,
-      batteryPercentage: item.batteryPercentage,
-      motordistanceCovered: item.motordistanceCovered,
       date: item.date,
-      analytics: item.analytics, // Analytics object comes after the main details
-      detectionDetails:item. detectionDetails,
+      mode: item.mode,
+      status: item.status,
+      disinfectionStartTime: item.disinfectionStartTime,
+      disinfectionEndTime: item.disinfectionEndTime,
+      disinfectionTimeTakenSeconds: item.disinfectionTimeTakenSeconds,
+      batteryUsageInPercentage: item.batteryUsageInPercentage,
+      uvLightUsageInSeconds: item.uvLightUsageInSeconds,
+      motorRuntimeInSeconds: item.motorRuntimeInSeconds,
+      distanceTravelledInMeters: item.distanceTravelledInMeters,
+      uvLightTimes: item.uvLightTimes,
+      motionDetectionTimes: item.motionDetectionTimes,
+      objectDetection: item.objectDetection,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
     }));
-    // Return the fetched data as JSON response
+
+    // Return the fetched and formatted data as JSON response
     return res.json({
       message: "Robot analytics retrieved successfully.",
       data: formattedData,
     });
   } catch (error) {
+    // Handle errors and return appropriate error response
     return res.status(500).json({ error: error.message });
   }
 };
